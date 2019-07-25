@@ -6,6 +6,7 @@
 """
 from flask import render_template, request, Blueprint, jsonify
 from flask_login import current_user, login_required
+from flask_babel import _
 
 from app.extensions import db
 from app.models import Item
@@ -37,7 +38,7 @@ def app():
 def new_item():
     data = request.get_json()
     if data is None or data['body'].strip() == '':
-        return jsonify(message='非法数据'), 400
+        return jsonify(message=_('Invalid data')), 400
     item = Item(body=data['body'], author=current_user._get_current_object())
     db.session.add(item)
     db.session.commit()
@@ -50,14 +51,14 @@ def new_item():
 def edit_item(item_id):
     item = Item.query.get_or_404(item_id)
     if current_user != item.author:
-        return jsonify(message='Permission denied. '), 403
+        return jsonify(message=_('Permission denied. ')), 403
 
     data = request.get_json()
     if data is None or data['body'].strip() == '':
-        return jsonify(message='Invalid item body. '), 400
+        return jsonify(message=_('Invalid item body. ')), 400
     item.body = data['body']
     db.session.commit()
-    return jsonify(message='Item updated')
+    return jsonify(message=_('Item updated'))
 
 
 # 局部更新
@@ -66,10 +67,10 @@ def edit_item(item_id):
 def toggle_item(item_id):
     item = Item.query.get_or_404(item_id)
     if current_user != item.author:
-        return jsonify(message="Permission denied."), 403
+        return jsonify(message=_("Permission denied.")), 403
     item.done = not item.done
     db.session.commit()
-    return jsonify(message='Item toggled.')
+    return jsonify(message=_('Item toggled.'))
 
 
 # 删

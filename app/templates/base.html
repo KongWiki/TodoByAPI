@@ -15,8 +15,13 @@
                     </a>
                 </li>
             {% else %}
-                <li><a class="waves-effect waves-light btn red" href="#login">Login</a></li>
+                <li><a class="waves-effect waves-light btn red" href="#login">{{ _('Login') }}</a></li>
             {% endif %}
+            <li>
+                <a class="waves-effect waves-light dropdown-trigger" id="locale-dropdown-btn" data-target="locale-dropdown">
+                    <i class="material-icons">language</i>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -28,17 +33,23 @@
                href="#app">{{ current_user.username }}</a>
         </li>
         <li><a class="waves-effect waves-light btn grey sidenav-close" id="logout-btn"
-               data-href="{{ url_for('auth.logout') }}">Logout</a></li>
+               data-href="{{ url_for('auth.logout') }}">{{ _('Logout') }}</a></li>
     {% else %}
-        <li><a class="waves-effect waves-light btn red sidenav-close" href="#login">Login</a></li>
+        <li><a class="waves-effect waves-light btn red sidenav-close" href="#login">{{ _('Login') }}</a></li>
     {% endif %}
+</ul>
+
+<ul id="locale-dropdown" class="dropdown-content">
+    <li><a class="lang-btn" data-href="{{ url_for('home.set_locale', locale='zh_Hans_CN') }}">简体中文</a></li>
+    <li><a class="lang-btn" data-href="{{ url_for('home.set_locale', locale='en_US') }}">English</a></li>
 </ul>
 
 <main>
     {% block content %}{% endblock %}
 </main>
 <footer class="center">
-    <small> &copy; 2019 <a class="blue-text link" href="https://www.kongwiki.top" title="Written by KongWiki">Kong Wiki</a> -
-        <a class="blue-text link" href="https://github.com/KongWiki" title="Fork me on GitHub">GitHub</a>
+    <small> &copy; 2018 <a class="blue-text link" href="http://greyli.com" title="Written by Grey Li">Grey Li</a> -
+        <a class="blue-text link" href="https://github.com/greyli/todoism" title="Fork me on GitHub">GitHub</a> -
+        <a class="blue-text link" href="http://helloflask.com" title="A HelloFlask project">HelloFlask</a>
     </small>
 </footer>

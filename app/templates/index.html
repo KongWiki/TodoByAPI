@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>ToDo</title>
     <link href="{{ url_for("static", filename="css/materialize.css") }}" rel="stylesheet">
-    <link href="{{ url_for("static", filename="css/mystyle.css") }}" rel="stylesheet">
+    <link href="{{ url_for("static", filename="css/style.css") }}" rel="stylesheet">
     <link rel="icon" href="{{ url_for("static", filename="favicon.ico") }}" type="image/x-icon">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -14,13 +14,13 @@
 <script src="{{ url_for("static", filename="js/materialize.min.js") }}"></script>
 <script src="{{ url_for("static", filename="js/script.js" ) }}" type="text/javascript"></script>
 <script type="text/javascript">
-    var csrf_token = "{{ csrf_token() }}";
     // 单页程序 其他的页面通过Ajax请求
     // 共包含三个页面 _intro.html : 介绍界面  _login.html: 登录界面  _app.html: 程序界面
     // 这三个界面都不会直接加载 而是通过ajax请获取并且动态插到跟页面中
     // 便于ajax发送请求到对应的URL 在首界面定义多个JavaScript变量 分别存储指向这三个页面的URL
     // 同时 因为所有的操作都是通过JavaScript发送Ajax请求实现
     // 登录、注册、注销这些不包含URL的变量URL 也在此定义
+    var csrf_token = "{{ csrf_token() }}";
     var login_page_url = "{{ url_for("auth.login") }}";
     var app_page_url = "{{ url_for("todo.app") }}";
     var intro_page_url = "{{ url_for("home.intro") }}";
@@ -30,6 +30,10 @@
     var login_url = "{{ url_for("auth.login") }}";
     var register_url = "{{ url_for("auth.register") }}";
     var logout_url = "{{ url_for("auth.logout") }}";
+
+    var default_error_message = "{{ _('Oops, something was wrong!') }}";
+    var empty_body_error_message = "{{ _('Your todo was empty!') }}";
+    var login_error_message = "{{ _('Empty username or password!') }}"
 </script>
 </body>
 </html>

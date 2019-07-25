@@ -7,6 +7,7 @@
 from faker import Faker
 from flask import render_template, redirect, url_for, Blueprint, request, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
+from flask_babel import _
 
 from app.extensions import db
 from app.models import User, Item
@@ -34,8 +35,8 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user is not None and user.validate_password(password):
             login_user(user)
-            return jsonify(message='Login Success')
-        return jsonify(message='Invalid username or password'), 400
+            return jsonify(message=_('Login Success'))
+        return jsonify(message=_('Invalid username or password')), 400
     return render_template('_login.html')
 
 
@@ -60,7 +61,7 @@ def register():
     db.session.add_all([item1, item2, item3, item4])
     db.session.commit()
 
-    return jsonify(username=username, password=password, message='Generate success.')
+    return jsonify(username=username, password=password, message=_('Generate success.'))
 
 
 # 退出登录
@@ -68,9 +69,4 @@ def register():
 @login_required
 def logout():
     logout_user()
-    return jsonify(message='Logout Success.')
-# @auth_bp.route('/logout')
-# @login_required
-# def logout():
-#     logout_user()
-#     return jsonify(message='Logout success.')
+    return jsonify(message=_('Logout Success.'))
