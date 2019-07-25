@@ -126,21 +126,21 @@ $(document).ready(function () {
 
     function new_item(e) {
         var $input = $('#item-input');
-        var value = $input.val().trim();
+        var value = $input.val().trim(); // 获取输入值
         if (e.which !== ENTER_KEY || !value) {
-            return;
+            return; // 如果enter键没有按下或输入值为空 就什么都不做
         }
-        $input.focus().val('');
+        $input.focus().val('');//聚焦到输入框 并清空内容
         $.ajax({
             type: 'POST',
             url: new_item_url,
-            data: JSON.stringify({'body': value}),
+            data: JSON.stringify({'body': value}), // 用输入值生成Json字符串
             contentType: 'application/json;charset=UTF-8',
             success: function (data) {
                 M.toast({html: data.message, classes: 'rounded'});
-                $('.items').append(data.html);
-                activeM();
-                refresh_count();
+                $('.items').append(data.html);// 把返回条目的HTML代码插入到页面
+                activeM(); // 激活新插入的HTML的Materiallize组件
+                refresh_count();// 更新页面上各个计数
             }
         });
     }

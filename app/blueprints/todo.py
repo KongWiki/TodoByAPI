@@ -13,6 +13,10 @@ from app.models import Item
 
 todo_bp = Blueprint("todo", __name__)
 
+"""
+todo的CRUD
+"""
+
 
 @todo_bp.route("/items/new", methods=['POST'])
 @login_required
