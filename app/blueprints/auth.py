@@ -22,7 +22,7 @@ fake = Faker()
 
 
 # 登录处理
-@auth_bp.route('login', methods=['POST', 'GET'])
+@auth_bp.route('/login', methods=['POST', 'GET'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('todo.app'))
@@ -31,7 +31,7 @@ def login():
         username = data['username']
         password = data['password']
 
-        user = User.quert.filter_by(username=username).first()
+        user = User.query.filter_by(username=username).first()
         if user is not None and user.validate_password(password):
             login_user(user)
             return jsonify(message='Login Success')
@@ -44,7 +44,7 @@ def login():
 def register():
     username = fake.user_name()
     # 确保随机生成的用户名不重复
-    while User.query.fileter_by(username=username).first() is not None:
+    while User.query.filter_by(username=username).first() is not None:
         username = fake.user_name()
     password = fake.word()
     user = User(username=username)
@@ -68,4 +68,9 @@ def register():
 @login_required
 def logout():
     logout_user()
-    return jsonify(message='Logout Success')
+    return jsonify(message='Logout Success.')
+# @auth_bp.route('/logout')
+# @login_required
+# def logout():
+#     logout_user()
+#     return jsonify(message='Logout success.')
